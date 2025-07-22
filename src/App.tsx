@@ -11,11 +11,15 @@ import { queryClient } from "@/config/queryClient";
 import { OptimizedLoading } from "@/components/ui/optimized-loading";
 import { setupGlobalErrorHandling } from "@/utils/production-logger";
 
-// Lazy load providers
-const AuthProvider = lazy(() => import("@/hooks/useAuth").then(m => ({ default: m.AuthProvider })));
-const AdminAuthProvider = lazy(() => import("@/hooks/useAdminAuth").then(m => ({ default: m.AdminAuthProvider })));
+// Import auth providers directly (not lazy loaded for critical functionality)
+import { AuthProvider } from "@/hooks/useAuth";
+import { AdminAuthProvider } from "@/hooks/useAdminAuth";
+
+// Import ProtectedRoute directly (needed for routing)
+import { ProtectedRoute } from "@/components/ProtectedRoute";
+
+// Lazy load other providers
 const ErrorBoundary = lazy(() => import("@/components/ErrorBoundary").then(m => ({ default: m.ErrorBoundary })));
-const ProtectedRoute = lazy(() => import("@/components/ProtectedRoute").then(m => ({ default: m.ProtectedRoute })));
 const Layout = lazy(() => import("@/components/layout/Layout").then(m => ({ default: m.Layout })));
 
 // Lazy Loading de Páginas
