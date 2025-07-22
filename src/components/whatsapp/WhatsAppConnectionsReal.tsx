@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { Smartphone, Wifi, WifiOff, RefreshCw, QrCode, Settings, Plus } from 'lucide-react';
+import { Smartphone, Wifi, WifiOff, RefreshCw, QrCode, Plus, Edit, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -71,14 +71,18 @@ export function WhatsAppConnectionsReal() {
     }
   };
 
-  const handleConfigurarWebhook = async () => {
-    const sucesso = await configurarWebhook();
-    if (sucesso) {
-      toast({
-        title: "Sucesso",
-        description: "Webhook configurado com sucesso!",
-      });
-    }
+  const handleEditConnection = () => {
+    toast({
+      title: "Em breve",
+      description: "Funcionalidade de edição em desenvolvimento",
+    });
+  };
+
+  const handleDeleteConnection = () => {
+    toast({
+      title: "Em breve", 
+      description: "Funcionalidade de exclusão em desenvolvimento",
+    });
   };
 
   const handleInstanceCreated = () => {
@@ -150,7 +154,7 @@ export function WhatsAppConnectionsReal() {
         </div>
 
         <Alert>
-          <Settings className="h-4 w-4" />
+          <Smartphone className="h-4 w-4" />
           <AlertDescription>
             Nenhuma configuração Evolution API encontrada. Crie sua primeira instância para começar.
           </AlertDescription>
@@ -204,39 +208,74 @@ export function WhatsAppConnectionsReal() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Smartphone className="w-5 h-5" />
-              <span>Instância: {config.instanceName}</span>
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-green-100 rounded-lg">
+                <Smartphone className="w-5 h-5 text-green-600" />
+              </div>
+              <div>
+                <span className="text-lg font-semibold">WhatsApp: {config.instanceName}</span>
+                <p className="text-sm text-muted-foreground">Conexão ativa</p>
+              </div>
             </div>
-            <Badge className={getStatusColor(status)}>
-              {getStatusIcon(status)}
-              <span className="ml-1">{getStatusText(status)}</span>
-            </Badge>
+            <div className="flex items-center space-x-2">
+              <Badge className={getStatusColor(status)}>
+                {getStatusIcon(status)}
+                <span className="ml-1">{getStatusText(status)}</span>
+              </Badge>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleEditConnection}
+                className="h-8 w-8"
+              >
+                <Edit className="w-4 h-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleDeleteConnection}
+                className="h-8 w-8 text-red-500 hover:text-red-700 hover:bg-red-50"
+              >
+                <Trash2 className="w-4 h-4" />
+              </Button>
+            </div>
           </CardTitle>
-          <CardDescription>
-            Status da sua conexão WhatsApp
-          </CardDescription>
         </CardHeader>
         
-        <CardContent className="space-y-4">
-          <div className="flex space-x-2">
+        <CardContent className="space-y-6">
+          <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+            <div className="flex items-center space-x-3">
+              {getStatusIcon(status)}
+              <div>
+                <p className="font-medium text-gray-900">{getStatusText(status)}</p>
+                <p className="text-sm text-gray-500">
+                  {status === 'CONNECTED' || status === 'conectado' 
+                    ? 'Pronto para receber mensagens'
+                    : 'Aguardando conexão para funcionar'
+                  }
+                </p>
+              </div>
+            </div>
             <Button
               onClick={handleVerificarStatus}
               disabled={verificandoStatus}
-              variant="outline"
+              variant="ghost"
+              size="sm"
             >
               {verificandoStatus ? (
-                <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+                <RefreshCw className="w-4 h-4 animate-spin" />
               ) : (
-                <RefreshCw className="w-4 h-4 mr-2" />
+                <RefreshCw className="w-4 h-4" />
               )}
-              Verificar Status
             </Button>
+          </div>
 
-            {(status === 'desconectado' || status === 'DISCONNECTED') && (
+          {(status === 'desconectado' || status === 'DISCONNECTED') && (
+            <div className="text-center py-4">
               <Button
                 onClick={handleObterQRCode}
                 disabled={conectando}
+                className="bg-green-600 hover:bg-green-700"
               >
                 {conectando ? (
                   <RefreshCw className="w-4 h-4 animate-spin mr-2" />
@@ -245,41 +284,30 @@ export function WhatsAppConnectionsReal() {
                 )}
                 Conectar WhatsApp
               </Button>
-            )}
-
-            <Button
-              onClick={handleConfigurarWebhook}
-              variant="outline"
-            >
-              <Settings className="w-4 h-4 mr-2" />
-              Configurar Webhook
-            </Button>
-          </div>
-
-          {qrCode && (
-            <div className="border rounded-lg p-4 bg-gray-50">
-              <h3 className="font-medium mb-2">Escaneie o QR Code com seu WhatsApp:</h3>
-              <div className="flex justify-center">
-                <img 
-                  src={qrCode} 
-                  alt="QR Code para conectar WhatsApp" 
-                  className="max-w-xs max-h-64"
-                />
-              </div>
-              <p className="text-sm text-gray-600 text-center mt-2">
-                1. Abra o WhatsApp no seu telefone<br/>
-                2. Vá em Configurações → Aparelhos conectados<br/>
-                3. Escaneie este QR Code
-              </p>
             </div>
           )}
 
-          {config.webhookUrl && (
-            <div className="border rounded-lg p-4 bg-green-50">
-              <h3 className="font-medium text-green-800 mb-1">Webhook Configurado</h3>
-              <p className="text-sm text-green-600">
-                URL: {config.webhookUrl}
-              </p>
+          {qrCode && (
+            <div className="border-2 border-dashed border-green-300 rounded-xl p-6 bg-green-50">
+              <div className="text-center space-y-4">
+                <div className="flex justify-center">
+                  <div className="bg-white p-4 rounded-lg shadow-md">
+                    <img 
+                      src={qrCode} 
+                      alt="QR Code para conectar WhatsApp" 
+                      className="w-48 h-48 mx-auto"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <h3 className="font-semibold text-green-800 mb-2">Conecte seu WhatsApp</h3>
+                  <div className="text-sm text-green-700 space-y-1">
+                    <p>1. Abra o WhatsApp no seu telefone</p>
+                    <p>2. Vá em Configurações → Aparelhos conectados</p>
+                    <p>3. Escaneie este QR Code</p>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </CardContent>
