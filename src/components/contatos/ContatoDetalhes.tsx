@@ -56,40 +56,12 @@ interface ContatoDetalhesProps {
   onClose: () => void;
 }
 
-// Mock de histórico de atendimentos
-const historicoMock: AtendimentoHistorico[] = [
-  {
-    id: 1,
-    data: '2024-06-12 14:30',
-    agente: 'Ana Silva',
-    setor: 'Vendas',
-    status: 'finalizado',
-    resumo: 'Contato interessado em produtos premium',
-    duracao: '15 min'
-  },
-  {
-    id: 2,
-    data: '2024-06-10 09:15',
-    agente: 'Carlos Santos',
-    setor: 'Suporte',
-    status: 'finalizado',
-    resumo: 'Resolução de problema técnico com produto',
-    duracao: '25 min'
-  },
-  {
-    id: 3,
-    data: '2024-06-08 16:45',
-    agente: 'Ana Silva',
-    setor: 'Vendas',
-    status: 'finalizado',
-    resumo: 'Primeira consulta sobre serviços',
-    duracao: '10 min'
-  }
-];
+// Histórico vazio - será carregado do banco de dados
+const historicoMock: AtendimentoHistorico[] = [];
 
 export function ContatoDetalhes({ contato, onClose }: ContatoDetalhesProps) {
   const [modoEdicao, setModoEdicao] = useState(false);
-  const [notas, setNotas] = useState('Contato muito interessado em produtos premium. Já demonstrou interesse em compras recorrentes.');
+  const [notas, setNotas] = useState('');
   const [novaTag, setNovaTag] = useState('');
   const [tags, setTags] = useState(contato.tags);
   const [conversaSelecionada, setConversaSelecionada] = useState<number | null>(null);

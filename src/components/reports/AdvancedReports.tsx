@@ -77,52 +77,35 @@ interface ReportData {
   };
 }
 
-const mockData: ReportData = {
+const emptyData: ReportData = {
   atendimentos: {
-    total: 1247,
-    resolvidos: 1089,
-    pendentes: 158,
-    tempoMedio: '4m 32s',
-    satisfacao: 4.6
+    total: 0,
+    resolvidos: 0,
+    pendentes: 0,
+    tempoMedio: '0s',
+    satisfacao: 0
   },
   agentes: {
-    total: 12,
-    ativos: 8,
-    produtividade: [
-      { nome: 'Ana Silva', atendimentos: 89, tempo: '3m 45s', satisfacao: 4.8 },
-      { nome: 'João Santos', atendimentos: 76, tempo: '4m 12s', satisfacao: 4.5 },
-      { nome: 'Maria Costa', atendimentos: 92, tempo: '3m 58s', satisfacao: 4.7 },
-      { nome: 'Pedro Lima', atendimentos: 65, tempo: '5m 22s', satisfacao: 4.3 }
-    ]
+    total: 0,
+    ativos: 0,
+    produtividade: []
   },
   canais: {
-    whatsapp: 856,
-    chatInterno: 267,
-    email: 124
+    whatsapp: 0,
+    chatInterno: 0,
+    email: 0
   },
-  horarios: [
-    { hora: '08:00', volume: 45 },
-    { hora: '09:00', volume: 78 },
-    { hora: '10:00', volume: 95 },
-    { hora: '11:00', volume: 112 },
-    { hora: '12:00', volume: 87 },
-    { hora: '13:00', volume: 65 },
-    { hora: '14:00', volume: 89 },
-    { hora: '15:00', volume: 134 },
-    { hora: '16:00', volume: 156 },
-    { hora: '17:00', volume: 142 },
-    { hora: '18:00', volume: 98 }
-  ],
+  horarios: [],
   metricas: {
-    tempoResposta: '2m 15s',
-    taxaResolucao: 87.3,
-    nps: 8.4,
-    volumeDiario: 147
+    tempoResposta: '0s',
+    taxaResolucao: 0,
+    nps: 0,
+    volumeDiario: 0
   }
 };
 
 export function AdvancedReports() {
-  const [data, setData] = useState<ReportData>(mockData);
+  const [data, setData] = useState<ReportData>(emptyData);
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [selectedChannel, setSelectedChannel] = useState('todos');
   const [reportType, setReportType] = useState('geral');
@@ -170,10 +153,9 @@ export function AdvancedReports() {
       console.error('Erro ao carregar relatório:', error);
       toast({
         title: "Erro ao carregar dados",
-        description: "Usando dados simulados",
+        description: "Não foi possível carregar os dados do relatório",
         variant: "destructive"
       });
-      setData(mockData);
     } finally {
       setLoading(false);
     }

@@ -19,17 +19,7 @@ interface WhatsAppConnection {
 }
 
 export function WhatsAppConnections() {
-  const [connections, setConnections] = useState<WhatsAppConnection[]>([
-    {
-      id: '1',
-      name: 'WhatsApp Principal',
-      phone: '+55 11 99999-9999',
-      status: 'connected',
-      lastActivity: new Date(),
-      isActive: true,
-      needsProviderApproval: false,
-    }
-  ]);
+  const [connections, setConnections] = useState<WhatsAppConnection[]>([]);
   const [isGeneratingQR, setIsGeneratingQR] = useState(false);
   const [activeQRConnection, setActiveQRConnection] = useState<string | null>(null);
   const { toast } = useToast();

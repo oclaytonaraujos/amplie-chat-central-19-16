@@ -48,49 +48,8 @@ export function useMessageTemplates() {
   return context;
 }
 
-// Dados iniciais de exemplo
-const defaultTemplates: MessageTemplate[] = [
-  {
-    id: '1',
-    name: 'Boas-vindas',
-    content: 'Olá {{nome}}! Bem-vindo(a) ao nosso atendimento. Como posso ajudá-lo(a) hoje?',
-    category: 'Saudação',
-    tags: ['boas-vindas', 'início'],
-    variables: ['nome'],
-    isDefault: true,
-    isFavorite: true,
-    usageCount: 45,
-    lastUsed: new Date(),
-    createdAt: new Date(),
-    updatedAt: new Date()
-  },
-  {
-    id: '2',
-    name: 'Solicitação de Informações',
-    content: 'Para prosseguir com seu atendimento, preciso de algumas informações:\n\n- Nome completo\n- E-mail\n- Telefone\n\nPoderia me fornecer esses dados?',
-    category: 'Coleta de Dados',
-    tags: ['informações', 'dados'],
-    variables: [],
-    isDefault: true,
-    isFavorite: false,
-    usageCount: 32,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  },
-  {
-    id: '3',
-    name: 'Transferência para Setor',
-    content: 'Vou transferir você para nosso setor de {{setor}}. Eles estão melhor preparados para ajudá-lo(a) com {{assunto}}. Por favor, aguarde um momento.',
-    category: 'Transferência',
-    tags: ['transferência', 'setor'],
-    variables: ['setor', 'assunto'],
-    isDefault: true,
-    isFavorite: false,
-    usageCount: 28,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  }
-];
+// Templates vazios - serão criados pelos usuários conforme necessário
+const defaultTemplates: MessageTemplate[] = [];
 
 const defaultCategories = ['Saudação', 'Coleta de Dados', 'Transferência', 'Despedida', 'Suporte', 'Vendas'];
 

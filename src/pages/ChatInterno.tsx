@@ -9,77 +9,10 @@ import { useToast } from '@/hooks/use-toast';
 import { Usuario, Conversa, Mensagem } from '@/types/chat-interno';
 import { ChatInternoTransferService } from '@/services/chatInternoTransfer';
 
-// Dados mockados para demonstração
-const usuariosMock: Usuario[] = [
-  { id: 1, nome: 'Ana Silva', email: 'ana@empresa.com', status: 'online', cargo: 'Supervisora' },
-  { id: 2, nome: 'Carlos Santos', email: 'carlos@empresa.com', status: 'online', cargo: 'Agente' },
-  { id: 3, nome: 'Maria Costa', email: 'maria@empresa.com', status: 'ausente', cargo: 'Agente' },
-  { id: 4, nome: 'João Oliveira', email: 'joao@empresa.com', status: 'offline', cargo: 'Administrador' },
-  { id: 5, nome: 'Lucia Ferreira', email: 'lucia@empresa.com', status: 'online', cargo: 'Agente' }
-];
-
-const conversasMock: Conversa[] = [
-  {
-    id: 1,
-    tipo: 'individual',
-    nome: 'Ana Silva',
-    participantes: [usuariosMock[0]],
-    ultimaMensagem: {
-      texto: 'Precisamos revisar os relatórios de hoje',
-      autor: 'Ana Silva',
-      tempo: '14:32'
-    },
-    mensagensNaoLidas: 2
-  },
-  {
-    id: 2,
-    tipo: 'grupo',
-    nome: 'Equipe Vendas',
-    participantes: [usuariosMock[1], usuariosMock[2], usuariosMock[4]],
-    ultimaMensagem: {
-      texto: 'Carlos Santos: Vou atualizar o status dos leads',
-      autor: 'Carlos Santos',
-      tempo: '13:45'
-    },
-    mensagensNaoLidas: 0
-  },
-  {
-    id: 3,
-    tipo: 'individual',
-    nome: 'Maria Costa',
-    participantes: [usuariosMock[2]],
-    ultimaMensagem: {
-      texto: 'Obrigada pela ajuda com o cliente!',
-      autor: 'Maria Costa',
-      tempo: '12:15'
-    },
-    mensagensNaoLidas: 0
-  }
-];
-
-const mensagensMock: Mensagem[] = [
-  {
-    id: 1,
-    texto: 'Oi! Como está o atendimento hoje?',
-    autor: usuariosMock[0],
-    tempo: '14:30',
-    tipo: 'texto'
-  },
-  {
-    id: 2,
-    texto: 'Está correndo bem! Só tive uma dúvida sobre o procedimento de reembolso.',
-    autor: { id: 999, nome: 'Você', email: 'voce@empresa.com', status: 'online', cargo: 'Agente' },
-    tempo: '14:31',
-    tipo: 'texto'
-  },
-  {
-    id: 3,
-    texto: 'Precisamos revisar os relatórios de hoje',
-    autor: usuariosMock[0],
-    tempo: '14:32',
-    tipo: 'texto'
-  }
-];
+// Dados vazios - serão carregados do banco de dados
+const usuariosMock: Usuario[] = [];
+const conversasMock: Conversa[] = [];
+const mensagensMock: Mensagem[] = [];
 
 export default function ChatInterno() {
   const [conversaSelecionada, setConversaSelecionada] = useState<Conversa | null>(null);
@@ -236,18 +169,9 @@ export default function ChatInterno() {
     }
   };
 
-  // Simular uma transferência para demonstração (remover em produção)
+  // Carregar dados reais do banco de dados
   React.useEffect(() => {
-    const timer = setTimeout(() => {
-      handleTransferReceived({
-        deUsuario: 'Ana Silva',
-        paraUsuario: 'Você',
-        cliente: 'Cliente João Silva',
-        motivo: 'Cliente solicitou falar com supervisor'
-      });
-    }, 5000);
-
-    return () => clearTimeout(timer);
+    // TODO: Implementar carregamento de conversas, usuários e mensagens do Supabase
   }, []);
 
   return (
